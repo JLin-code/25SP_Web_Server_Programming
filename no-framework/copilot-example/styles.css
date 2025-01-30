@@ -63,6 +63,9 @@ body {
 
 .watch-showcase {
     padding: 100px 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
 }
 
 .watch-item {
@@ -71,6 +74,7 @@ body {
     padding: 0 40px;
     margin: 100px 0;
     position: relative;
+    width: 100%;
 }
 
 .watch-image {
@@ -86,6 +90,13 @@ body {
 
 .watch-image img:hover {
     transform: scale(1.05);
+}
+
+.watch-item img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
 }
 
 .watch-details {
