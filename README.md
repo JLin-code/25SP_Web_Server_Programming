@@ -2,6 +2,7 @@ Hello, my name is Jack Lin! I am a senior in Computer Science and commute to sch
 Dover Plains, it is about an hour away from campus. I have an interest in economics, videogames, and coding! 
 I have no undergraduates, but I have taken the following courses all at New Paltz: Computer Science I / II, 
 Assembly Language & Computer Architecture, Computer Algorithms, Discrete Math, and Digital Logic. 
+
 I have roughly two years of experience with Java, with 8 months of experience with C / C++. I also have experience with 
 JavaScript, XML, CSS, and Python from personal projects. I have accomplished 3 projects relating to C language and Assembly 
 with the Assembly Language & Computer Architecture course. I have also personally completed a full project on a 
