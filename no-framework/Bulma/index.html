@@ -25,7 +25,7 @@
       
           </a>
       
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <a :class="{ 'is-active': isOpen}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-tar get="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -121,16 +121,43 @@
                         <div class="notification is-warning is-light">
                             This is a warning notification
                         </div>
-                    </div>
-                    <div class="column">
                         <div class="notification is-danger is-light">
                             This is a danger notification
                         </div>
                     </div>
+                    <div class="column">
+                        <ul>
+                            <li v-for="item in cart" :key="item.name">
+                                {{ notification }}
+                            </li>
+                    </div>
                 </div>
             </div>
-            <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+            <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" type="module"></script>
             <script>
+                const {createApp, ref } = Vue;
+
+                const app = createApp({
+                    setup() {
+                        const notificcations = ref{{
+                        "This is a primary notification #1"
+                        "This is a primary notification #2"
+                        "This is a primary notification #3"
+                        "This is a primary notification #4"
+
+                    }}}
+                });
+
+                    const removeNotification = (index) => {
+                        app.notifications.splice(index, 1);
+                    }
+
+                    const cart = ref([])
+
+                    function addToCart({name, price}) {
+                        cart.value.push({name, price, quantity:1});
+                    }
+
                 $(document).ready(function() {
                     $('.navbar-burger').click(function() {
                         $('.navbar-burger').toggleClass('is-active'); 
