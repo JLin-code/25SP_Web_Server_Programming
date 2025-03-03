@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-let isActive = ref(false);
-
-
+const isActive = ref(false);
 
 </script>
 
@@ -16,7 +14,7 @@ let isActive = ref(false);
                 </a>
 
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                   data-target="navbarBasicExample">
+                    :class="{ 'is-active': isActive }" @click="isActive = !isActive">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -24,7 +22,7 @@ let isActive = ref(false);
                 </a>
             </div>
 
-            <div id="navbarBasicExample" class="navbar-menu">
+            <div id="navbar-menu" :class="{ 'is-active': isActive }" class="navbar-menu">
                 <div class="navbar-start">
 
 
