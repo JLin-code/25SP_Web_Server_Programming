@@ -3,6 +3,7 @@ import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import NotificationList from './components/NotificationList.vue';
 import SlidingDrawer from './components/SlidingDrawer.vue';
+import ShoppingCart from './components/ShoppingCart.vue';
 
 </script>
 
@@ -12,16 +13,13 @@ import SlidingDrawer from './components/SlidingDrawer.vue';
   </header>
 
   <div class="container body-container">
-    <NotificationList/>
+    <NotificationList />
     <RouterView />
   </div>
 
   <SlidingDrawer>
-    <h2 class="title is-4">
-      Shopping Cart
-    </h2>
+    <ShoppingCart />
   </SlidingDrawer>
-
 </template>
 
 <style>
