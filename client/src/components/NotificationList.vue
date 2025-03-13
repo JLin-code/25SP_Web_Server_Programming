@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import 
 import { ref } from 'vue';
 
 const notifications = ref([
@@ -19,7 +20,7 @@ function removeNotification(index: number) {
         <div v-for="(message, index) in notifications" :key="index" class="notification is-light"
              :class="`is-${message.type}`">
             <button class="delete" @click="removeNotification(index)"></button>
-            {{ message.text }}
+            {{ message.message }}
         </div>
     </div>
 </template>
