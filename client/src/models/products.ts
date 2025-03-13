@@ -1,70 +1,60 @@
 import products from '../data/products.json'
+import type { DataListEnvelope } from './dataEnvelopes'
 
-// Define types based on the structure of the products JSON
-export interface Review {
-  rating: number;
-  comment: string;
-  date: string;
-  reviewerName: string;
-  reviewerEmail: string;
+export interface ProductDimensions {
+  width: number
+  height: number
+  depth: number
 }
 
-export interface Dimensions {
-  width: number;
-  height: number;
-  depth: number;
+export interface ProductReview {
+  rating: number
+  comment: string
+  date: string
+  reviewerName: string
+  reviewerEmail: string
 }
 
-export interface Meta {
-  createdAt: string;
-  updatedAt: string;
-  barcode: string;
-  qrCode: string;
+export interface ProductMeta {
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Product {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  tags: string[];
-  brand?: string;
-  sku: string;
-  weight: number;
-  dimensions: Dimensions;
-  warrantyInformation: string;
-  shippingInformation: string;
-  availabilityStatus: string;
-  reviews: Review[];
-  returnPolicy: string;
-  minimumOrderQuantity: number;
-  meta: Meta;
-  images: string[];
-  thumbnail: string;
+  id: number
+  title: string
+  description: string
+  category: string
+  price: number
+  rating?: number
+  stock?: number
+  tags?: string[]
+  brand?: string
+  sku?: string
+  weight?: number
+  dimensions?: ProductDimensions
+  shippingInformation?: string
+  availabilityStatus?: string
+  reviews?: ProductReview[]
+  returnPolicy?: string
+  minimumOrderQuantity?: number
+  meta?: ProductMeta
+  images?: string[]
+  thumbnail?: string
 }
 
-export interface ProductsResponse {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
+export function getAll() {
+  return products as DataListEnvelope<Product>
 }
 
-// Parse the imported JSON as ProductsResponse type
-const items = (products as unknown as ProductsResponse).products;
-
-export function getAllProducts() {
-    return products as DataListEnvelope<Product>
+export function getOne(id: string) {
+  return products.items.find((item) => item.id == +id) as Product
 }
 
-export function getProducts() {
-  return items
-}
-
-export function getProduct(id: string) {
-  return items.find(item => item.id === +id)
-}
+getAll().items.push({
+  id: 100,
+  title: 'Test Product',
+  description: 'This is a test product',
+  category: 'test',
+  price: 100,
+})

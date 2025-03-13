@@ -1,6 +1,6 @@
-export inferface DataEnvelope<T> {
-    data: T;
-    total: number;
-    skip: number;
-    limit: number;
-}
+export interface DataListEnvelope<T> {
+    items: T[]
+    total: number
+    skip: number
+    limit: number
+  }
