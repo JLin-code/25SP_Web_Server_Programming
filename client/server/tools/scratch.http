@@ -6,4 +6,4 @@ GET https://google.com/search?q=newpaltz
 GET https://dummyjson.com/products
 
 ###
-GET https://dummyjson.com/product/1
+GET https://dummyjson.com/products/1
