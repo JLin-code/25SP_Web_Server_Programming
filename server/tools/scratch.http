@@ -7,3 +7,25 @@ GET https://dummyjson.com/products
 
 ###
 GET https://dummyjson.com/products/1
+
+###
+GET https://localhost:800/products/1
+
+###
+GET https://localhost:800/products
+Content-Type: application/json
+
+{
+    "name": "new product",
+    "description": "this is a new product",
+    "price": 100,
+    "category": "new category",
+    "image": "new image",
+    "stock": 100
+}
+
+###
+PATCH https://localhost:800/products/1
+
+###
+DELETE https://localhost:800/products/1
