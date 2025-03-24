@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAll, type Product } from '@/models/products';
+import { getAll, type Product } from '../../models/products';
 
 const products = getAll()
 

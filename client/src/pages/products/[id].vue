@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getOne } from '@/models/products';
+import { getOne } from '../../models/products';
 import { useRoute } from 'vue-router';
 
 const route = useRoute('/products/[id]')
