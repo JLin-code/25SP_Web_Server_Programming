@@ -1,31 +1,38 @@
+###
+GET https://google.com/search?q=new+paltz 
 
 ###
-GET https://google.com/search?q=newpaltz
-
-### 
 GET https://dummyjson.com/products
 
 ###
 GET https://dummyjson.com/products/1
 
 ###
-GET https://localhost:800/products/1
+http://localhost:8000/products
 
 ###
-GET https://localhost:800/products
+GET http://localhost:8000/products/1
+
+###
+POST http://localhost:8000/products
 Content-Type: application/json
 
 {
-    "name": "new product",
-    "description": "this is a new product",
-    "price": 100,
-    "category": "new category",
-    "image": "new image",
-    "stock": 100
+  "title": "New Product",
+  "description": "This is a new product",
+  "price": 100,
+  "category": "electronics",
+  "image": "https://example.com/image.jpg",
+  "stock": 50
 }
 
 ###
-PATCH https://localhost:800/products/1
+PATCH http://localhost:8000/products/1
+Content-Type: application/json
+
+{
+  "price": 150
+}
 
 ###
-DELETE https://localhost:800/products/1
+DELETE http://localhost:8000/products/1
