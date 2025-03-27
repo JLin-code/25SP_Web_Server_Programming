@@ -8,7 +8,7 @@ app
   .get('/', (req, res) => {
   res.send('Hello New Paltz, NY!!!')
 })
-  .use('/products', productsController)
+  .use('/api/v1/products', productsController)
 
 
 app.listen(PORT, () => {
