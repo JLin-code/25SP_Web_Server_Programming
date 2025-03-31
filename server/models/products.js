@@ -1,25 +1,25 @@
 
 const data = require('../data/products.json')
 
-function getAll() {
-    return data
+async function getAll() {
+    return data.items
 }
 
-function get(id) {
-    return data.find(item => item.id == id)
+async function get(id) {
+    return data.items.find(item => item.id == id)
 }
 
-function create(item) {
+async function create(item) {
     const newItem = {
-        id: data.length + 1,
+        id: data.items.length + 1,
         ...item
     }
     data.push(newItem)
     return newItem
 }
 
-function update(id, item) {
-    const index = data.findIndex((item) => item.id == id)
+async function update(id, item) {
+    const index = data.items.findIndex((item) => item.id == id)
     if (index === -1) {
         return null
     }
@@ -32,13 +32,13 @@ function update(id, item) {
 
 }
 
-function remove(id) {
-    const index = data.findIndex((item) => item.id == id)
+async function remove(id) {
+    const index = data.items.findIndex((item) => item.id == id)
     if (index === -1) {
         return null
     }
     const deletedItem = data[index]
-    data.splice(index, 1)[0]
+    data.items.splice(index, 1)[0]
     return deletedItem
 
 }

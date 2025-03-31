@@ -13,8 +13,15 @@ app
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`)
-})
+});
 
+/*
+  Asynchronous programming in Node.js:
+  1. Callbacks 
+  2. Pipeline 
+  3. Promises
+  4. Async/Await
+*/
 
 
 console.log('Server Good To Go!')
