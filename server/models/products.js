@@ -1,5 +1,9 @@
 
 const data = require('../data/products.json')
+const CustomError = require('../utils/CustomError')
+const statusCodes = require('../utils/statusCodes')
+
+const isAdmin = true;
 
 async function getAll() {
     return data.items
@@ -7,9 +11,8 @@ async function getAll() {
 
 async function get(id) {
     const item = data.items.find((item) => item.id == id)
-    if (!item) {
-        throw new Error('Item not found', { status: 404 })
-    }
+    if (!item) 
+        throw new CustomError('Item not found', statusCodes.NOT_FOUND)
     return item
 }
 
