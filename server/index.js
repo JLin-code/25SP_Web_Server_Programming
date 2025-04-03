@@ -1,22 +1,25 @@
+// Load the http module to create an http server.
 const express = require('express')
-const productsController = require('./controllers/products')   
-const PORT = 8000;
+const productsController = require('./controllers/products')
+const productsController = require('./controllers/products');
+const e = require('express');
+
+const PORT = 8000
 
 const app = express();
 
+// Middleware
+    app.use(express.json()) // Parse JSON request body
+//controller middleware
+
 app
   .get('/', (req, res) => {
-  res.send('Hello New Paltz, NY!!!')
-})
+    res.send('Hello New Paltz, NY!!!')
+  })
   .use('/api/v1/products', productsController)
 
-  // Middleware
-    app.use(express.json()) // Parse JSON request body
-    app.use(express.urlencoded({ extended: true })) // Parse URL-encoded request body
 
-  //controller.middleware
-
-
+//error handling middleware
 app.use((err, req, res, next) => {
   console.error(err)
   const status = err.status || 500
@@ -25,25 +28,26 @@ app.use((err, req, res, next) => {
     status,
     message: err.message || 'Internal Server Error',
   }
-res.status(status).json(error)
-})
+  res.status(status).send(error)
+ })
+
+// Listen on port 8000, IP defaults to
+//
 
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`)
+    console.log(`Server running at http://localhost:${PORT}/`)
 });
 
 /*
-  Asynchronous programming in Node.js:
-  1. Callbacks 
-  2. Pipeline 
+  Asynchronous patterns in Node.js
+  1. Callbacks
+  2. Pipeline
   3. Promises
   4. Async/Await
 */
 
-
-console.log('Server Good To Go!')
-
+console.log('Hello World!')
 /*
 Ways to send data to the server:
 
