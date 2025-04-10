@@ -1,4 +1,4 @@
-const data = require('../data/products.json')
+const data = require('../data/users.json')
 const { CustomError, statusCodes } = require('./errors')
 
 const isAdmin = true;

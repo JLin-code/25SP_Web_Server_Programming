@@ -1,6 +1,7 @@
 // Load the http module to create an http server.
 const express = require('express')
-const productsController = require('./controllers/products')
+const productsController = require('./controllers/products');
+const usersController = require('./controllers/users');
 const e = require('express');
 
 const PORT = 8000
@@ -17,8 +18,9 @@ app
     res.send('Hello New Paltz, NY!!!')
   })
   .use('/api/v1/products', productsController)
-
-  .use('/', express.static('dist'))
+  .use('/api/v1/users', usersController)
+  
+  .use('/', express.static('dist')) 
 
 
 //error handling middleware
@@ -50,36 +52,37 @@ app.listen(PORT, () => {
 */
 
 console.log('Hello World!')
-/*
-Ways to send data to the server:
 
-1. Path Query parameters (GET): http://localhost:8000/api/v1/products?id=1&name=Product%201
-2. Query parameters (GET): http://localhost:8000/api/v1/products?id=1&name=Product%201
-3. Headers (GET, POST, PATCH): { "session": "abc123" }
-3.5 Cookies (GET, POST, PATCH): { "session": "abc123" }
-4. Request Body (POST, PATCH): { "name": "Product 1", "price": 10.99 }
-4.0 Form Data (POST): { "name": "Product 1", "price": 10.99 }
-4.5 Multipart Form Data (POST): { "image": "image.png", "name": "Product 1", "price": 10.99 }
+/* 
+  Ways to send data to the server
+  1. PATH parameters: /users/123
+  2. Query parameters: ?name=John&age=30
+  3. Headers
+    3.5. Cookies
+  4. Request body: { "name": "John", "age": 30 }
+    4.0. Form data: name=John&age=30
+    4.5. JSON data: { "name": "John", "age": 30 }
+
+*/
+
+/* 
+  parts of a url
+  1. Protocol: http:// or https://
+  2. Domain: www.example.com
+  3. Port: :80 or :443
+  4. Path: /path/to/resource
+  5. Query parameters: ?name=John&age=30
+  6. Fragment: #section1
+
+  example: https://www.example.com:80/path/to/resource?name=John&age=30#section1
 */
 
 /*
-Parts of a url:
-1. Protocol: http:// or https://
-2. Domain:  www.example.com
-3. Port: 8000 (optional, default is 80 for http and 443 for https)
-4. Path: /api/v1/products
-5. Query parameter: ?id=1&name=Product%201 (optional, starts with ?)
-6. Fragment: #section1 (optional, starts with #)
-
-Example: http://localhost:8000/api/v1/products?id=1&name=Product%201#section1
-*/
-
-/*
-Module Types:
-1. CommonJS: require() and module.exports (Node.js default)
-  Import: require('./controllers/products')
-  Export: module.exports = { router }
-2. ES6: import and export (modern JavaScript, supported in Node.js and browsers)
-  Import: import productsController from './controllers/products.js'
-  Export: export default router
+  Module Types
+    1. CommonJS:
+      import: require('module')
+      export: module.exports = { functions, variables, etc. }
+    2. ES6:
+      import: import { functions, variables, etc. } from 'module'
+      export: export { functions, variables, etc. }
 */

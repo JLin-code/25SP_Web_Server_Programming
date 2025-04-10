@@ -1,17 +1,8 @@
 ###
-GET https://google.com/search?q=new+paltz 
-
-###
-GET https://dummyjson.com/products
-
-###
-GET https://dummyjson.com/products/1
-
-###
 http://localhost:8000/api/v1/products
 
 ###
-GET http://localhost:8000/api/v1/products/99
+GET http://localhost:8000/api/v1/products/1
 
 ###
 POST http://localhost:8000/api/v1/products
@@ -36,3 +27,34 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:8000/api/v1/products/1
+
+
+########################
+# Users Controller
+########################
+
+###
+http://localhost:8000/api/v1/users
+
+###
+GET http://localhost:8000/api/v1/users/1
+
+###
+POST http://localhost:8000/api/v1/users
+Content-Type: application/json
+
+{
+
+}
+
+###
+PATCH http://localhost:8000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe"
+}
+
+###
+DELETE http://localhost:8000/api/v1/users/1

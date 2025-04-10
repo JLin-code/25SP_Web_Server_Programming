@@ -1,4 +1,4 @@
-const model = require('../models/products')
+const model = require('../models/users')
 const express = require('express')
 const router = express.Router()
 
