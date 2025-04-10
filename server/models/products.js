@@ -1,14 +1,22 @@
 const data = require('../data/products.json')
 const { CustomError, statusCodes } = require('./errors')
+const { connect } = require('./supabase')
+
+const TABLE_NAME = 'products'
 
 const isAdmin = true;
 
 async function getAll() {
-    return data
+    const list = await connect().from(TABLE_NAME).select('*')
+    return{
+        items: list.data,
+        total: list.count
+    }
 }
 
 async function get(id){
-    const item = data.items.find((item) => item.id == id)
+    const item = connect().from(TABLE_NAME).select('*').eq('id', id).single()
+                // data.items.find((item) => item.id == id)
     if (!item) {
         throw new CustomError('Item not found', statusCodes.NOT_FOUND)
     }
