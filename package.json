@@ -1,20 +1,21 @@
 {
-    "name": "2025spring",
-    "version": "1.0.0",
-    "private": true,
-    "description": "",
-    "scripts": {
-      "start": "node server/index.js",
-      "dev": "nodemon server/index.js --watch server",
-      "build: client": "npm run build --prefix client", 
-      "build": "pnpm i -- prefix client && npm run build:client"
-    },
-    "license": "ISC",
-    "dependencies": {
-      "express": "^4.21.2",
-      "dayjs": "^1.11.13"
-    },
-    "devDependencies": {
-      "nodemon": "^3.1.9"
-    }
+  "name": "2025spring",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js --watch server",
+    "build: client": "npm run build --prefix client",
+    "build": "pnpm i -- prefix client && npm run build: client"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "dayjs": "^1.11.13",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
+}
