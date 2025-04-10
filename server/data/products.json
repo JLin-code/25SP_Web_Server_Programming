@@ -1430,7 +1430,7 @@
         "warrantyInformation": "2 year warranty",
         "shippingInformation": "Ships in 2 weeks",
         "availabilityStatus": "In Stock",
-        "reviews": [
+        "reviews": [                                         
           {
             "rating": 5,
             "comment": "Great product!",
