@@ -1,17 +1,18 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
+
 export interface Notification {
-    imessage: string
-    type: 'info' | 'success' | 'warning' | 'error'
+  message: string
+  type: 'success' | 'error' | 'warning' | 'info'
 }
 
 const notifications = ref<Notification[]>([])
 
-export const refNotifications = () => { return notifications}
+export const refNotifications = () => notifications
 
-export function addNotifications(notification){
-    notifications.value.push(notification)
+export function addNotification(notification: Notification) {
+  notifications.value.push(notification)
 }
 
 export function removeNotification(index: number) {
-        notifications.value.splice(index, 1)
+  notifications.value.splice(index, 1)
 }
