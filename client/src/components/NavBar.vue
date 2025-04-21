@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { refCart } from '../models/cart';
+import { refCart } from '@/models/cart';
 import { ref } from 'vue'
 
 const isActive = ref(false)
