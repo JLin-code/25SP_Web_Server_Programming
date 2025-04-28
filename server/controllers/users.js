@@ -5,7 +5,9 @@ const router = express.Router()
 router
     .get('/', (req, res, next) => {
 
-        model.getAll().then((data) => {
+        const { limit, offset, sort, order } = req.query
+
+        model.getAll(num(limit), num(offset), sort, order).then((data) => {
             res.send(data)
         }).catch(next)
 
@@ -42,5 +44,24 @@ router
             res.send(data)
         }).catch(next)
     })
+     .get('/search/:query', (req, res, next) => {
+         const { query } = req.params
+         const { limit, offset, sort, order } = req.query
+         model.search(query, num(limit), num(offset), sort, order).then((data) => {
+             res.send(data)
+         }).catch(next)
+ 
+     })
+     .post('/seed', (req, res, next) => {
+         const { data } = req.body
+ 
+         model.seed(data).then((data) => {
+             res.status(201).send(data)
+         }).catch(next)
+     })   
 
 module.exports = router
+
+function num(value) {
+    return value ? +value : undefined
+}

@@ -29,9 +29,9 @@ CREATE TABLE products (
     sku VARCHAR(50),
     weight NUMERIC(10, 2),
     dimensions JSONB,
-    shippingInformation TEXT,
-    availabilityStatus VARCHAR(50),
-    returnPolicy TEXT,
+    shipping_information TEXT,
+    availability_status VARCHAR(50),
+    return_policy TEXT,
     minimum_order_quantity INT,
     meta JSONB,
     images TEXT [],
@@ -74,3 +74,8 @@ CREATE TABLE order_items (
 CREATE INDEX idx_orders_user_id ON orders(user_id);
 CREATE INDEX idx_order_items_order_id ON order_items(order_id);
 CREATE INDEX idx_order_items_product_id ON order_items(product_id);
+-- The following SQL statements are used to allow aggregate functions in PostgREST
+ALTER ROLE authenticator
+SET pgrst.db_aggregates_enabled = 'true';
+NOTIFY pgrst,
+'reload config';

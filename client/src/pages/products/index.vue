@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { addToCart } from '@/models/cart';
 import { type DataListEnvelope } from '@/models/dataEnvelopes';
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
 import { getAll, type Product } from '@/models/products';
+import { ref } from 'vue';
 
-const products = ref([] as DataListEnvelope<Product>)
+const products = ref({} as DataListEnvelope<Product>)
 
-    getAll().
-    then((response) => {
-    products.value = response;
-});
-
+getAll()
+    .then((response) => {
+        products.value = response
+    })
 
 function doAddToCart(product: Product) {
     addToCart(product)
@@ -47,6 +45,9 @@ function doAddToCart(product: Product) {
 }
 
 .shelf .product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 30%;
     margin: 1em;
     padding: 1em;

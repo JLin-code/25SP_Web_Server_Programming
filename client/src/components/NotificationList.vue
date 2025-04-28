@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { refNotifications, removeNotification } from '../models/notifications';
+import { refNotifications, removeNotification } from '@/models/notifications';
 import { ref } from 'vue';
 
 const notifications = refNotifications()

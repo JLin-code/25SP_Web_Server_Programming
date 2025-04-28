@@ -1,154 +1,123 @@
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
+const data = require('../data/users.json')
+const { CustomError, statusCodes } = require('./errors')
+const { connect } = require('./supabase')
 
-// Initialize Supabase client
-const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY || process.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const TABLE_NAME = 'users'
 
-/**
- * User model for database operations
- */
-const UsersModel = {
-  /**
-   * Get all users
-   * @returns {Promise<Array>} Array of user objects
-   */
-  async getAll() {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*');
-      
-      if (error) throw error;
-      
-      return { 
-        success: true, 
-        items: data 
-      };
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      return { 
-        success: false, 
-        message: 'Failed to retrieve users', 
-        error 
-      };
+const BaseQuery = () => connect().from(TABLE_NAME)
+    .select('*, product_reviews(average_rating:rating.avg())', { count: "estimated" })
+    //.select('*')
+
+const isAdmin = true;
+
+async function getAll(limit = 30, offset = 0, sort = 'id', order = 'desc'){
+    const list = await BaseQuery()
+    .order(sort, { ascending: order === 'asc' })
+    .range(offset, offset + limit - 1) // 0 based index but range is inclusive
+    if(list.error){
+        throw list.error
     }
-  },
-
-  /**
-   * Get user by ID
-   * @param {number} id - User ID
-   * @returns {Promise<Object>} User object
-   */
-  async getById(id) {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', id)
-        .single();
-      
-      if (error) throw error;
-      
-      return { 
-        success: true, 
-        item: data 
-      };
-    } catch (error) {
-      console.error(`Error fetching user ${id}:`, error);
-      return { 
-        success: false, 
-        message: 'User not found', 
-        error 
-      };
+    return {
+        items: list.data,
+        total: list.count
     }
-  },
+}
 
-  /**
-   * Create new user
-   * @param {Object} userData - User data
-   * @returns {Promise<Object>} Created user
-   */
-  async create(userData) {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .insert([userData])
-        .select();
-      
-      if (error) throw error;
-      
-      return { 
-        success: true, 
-        item: data[0] 
-      };
-    } catch (error) {
-      console.error('Error creating user:', error);
-      return { 
-        success: false, 
-        message: 'Failed to create user', 
-        error 
-      };
+async function get(id){
+    const { data: item, error } = await connect().from(TABLE_NAME)
+    .select('*, product_reviews(*)').eq('id', id)
+    if (!item.length) {
+        throw new CustomError('Item not found', statusCodes.NOT_FOUND)
     }
-  },
-
-  /**
-   * Update user
-   * @param {number} id - User ID
-   * @param {Object} userData - User data to update
-   * @returns {Promise<Object>} Updated user
-   */
-  async update(id, userData) {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .update(userData)
-        .eq('id', id)
-        .select();
-      
-      if (error) throw error;
-      
-      return { 
-        success: true, 
-        item: data[0] 
-      };
-    } catch (error) {
-      console.error(`Error updating user ${id}:`, error);
-      return { 
-        success: false, 
-        message: 'Failed to update user', 
-        error 
-      };
+    if (error) {
+        throw error
     }
-  },
+    return item[0]
+}
 
-  /**
-   * Delete user
-   * @param {number} id - User ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async delete(id) {
-    try {
-      const { error } = await supabase
-        .from('users')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
-      
-      return { 
-        success: true 
-      };
-    } catch (error) {
-      console.error(`Error deleting user ${id}:`, error);
-      return { 
-        success: false, 
-        message: 'Failed to delete user', 
-        error 
-      };
+async function search(query, limit = 30, offset = 0, sort = 'id', order = 'desc'){
+    const { data: items, error, count } = await BaseQuery()
+    .or(`firstName.ilike.%${query}%,lastName.ilike.%${query}%,email.ilike.%${query}%,phone.ilike.%${query}%`)
+    .order(sort, { ascending: order === 'asc' })
+    .range(offset, offset + limit -1)
+    if (error) {
+        throw error
     }
-  }
-};
+    return {
+        items,
+        total: count
+    }
+} 
 
-module.exports = UsersModel;
+async function create(item){
+    if(!isAdmin){
+        throw CustomError("Sorry, you are not authorized to create a new item", statusCodes.UNAUTHORIZED)
+    }
+    const { data: newItem, error } = await connect().from(TABLE_NAME).insert(item).select('*')
+    if (error) {
+        throw error
+    }
+    return newItem
+}
+
+async function update(id, item){
+    if(!isAdmin){
+        throw CustomError("Sorry, you are not authorized to update this item", statusCodes.UNAUTHORIZED)
+    }
+    const { data: updatedItem, error } = await connect().from(TABLE_NAME).update(item).eq('id', id).select('*')
+    if (error) {
+        throw error
+    }
+    return updatedItem
+
+}
+
+async function remove(id){
+    if(!isAdmin){
+        throw CustomError("Sorry, you are not authorized to delete this item", statusCodes.UNAUTHORIZED)
+    }
+    const { data: deletedItem, error } = await connect().from(TABLE_NAME).delete().eq('id', id)
+    if (error) {
+        throw error
+    }
+    return deletedItem
+}
+
+async function seed(){
+    for (const item of data.items) {
+
+        const insert = mapToDB(item)
+        const { data: newItem, error } = await connect().from(TABLE_NAME).insert(insert).select('*')
+        if (error) {
+            throw error
+        }
+
+    }
+    return { message: 'Seeded successfully' }
+}
+
+function mapToDB(item) {
+    return {
+        //id: item.id,
+        firstName: item.firstName,
+        lastName: item.lastName,
+        email: item.email,
+        phone: item.phone,
+        age: item.age,
+        gender: item.gender,
+        birthDate: item.birthDate,
+        image: item.image,
+        university: item.university,
+        role: item.role,
+    }
+}
+
+module.exports = {
+    getAll,
+    get,
+    search,
+    create,
+    update,
+    remove,
+    seed,
+}
