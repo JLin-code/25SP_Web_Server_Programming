@@ -14,7 +14,13 @@ getAll()
 function doAddToCart(product: Product) {
     addToCart(product)
 }
+interface Rateable {
+    product_reviews: {
+        average_rating: number;
+    }
+}
 </script>
+
 
 <template>
     <div>
@@ -27,6 +33,7 @@ function doAddToCart(product: Product) {
                     </RouterLink>
                 </div>
                 <div class="product-info">
+                    <b-rate v-model="(<p as any as Rateable) " disabled show-scores></b-rate>
                     <h2>{{ p.title }}</h2>
                     <p>{{ p.description }}</p>
                     <span class="price">${{ p.price }}</span>

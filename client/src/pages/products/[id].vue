@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getOne, type Product } from '@/models/products';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute('/products/[id]')
@@ -10,6 +10,13 @@ getOne(route.params.id)
     .then((response) => {
         product.value = response;
     })
+
+
+const avg_rating = computed(() => {
+    if (!product.value?.reviews) return 0;
+    const sum = product.value.reviews.reduce((acc, review) => acc + review.rating, 0);
+    return sum / product.value.reviews.length;
+});
 
 </script>
 
@@ -41,6 +48,9 @@ getOne(route.params.id)
                                      class="avatar" />
                                 <strong>{{ review.reviewer?.firstName }} {{ review.reviewer?.lastName }}</strong> - {{
                                     review.rating }} stars
+
+                                    <b-rate v-model="review.rating" disabled show-scores></b-rate>
+
                                 <p>{{ review.comment }}</p>
                                 <i>
                                     {{ review.date }}
