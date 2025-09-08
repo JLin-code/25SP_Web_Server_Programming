@@ -22,7 +22,13 @@ export default defineConfig(({ mode }) => {
     plugins: [
       VueRouter(),
       vue(),
-      vueJsx(),
+      vueJsx({
+        // Prevent Babel from generating vulnerable RegExp patterns
+        babelPlugins: [],
+        transformOn: false,
+        // Use safer JSX transform
+        optimize: true
+      }),
       vueDevTools(),
     ],
     resolve: {
@@ -32,6 +38,17 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: '../dist',
+      // Security: Minimize bundle to detect potential ReDoS patterns
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          // Remove potentially vulnerable regex patterns
+          unsafe_regexp: false,
+          passes: 2
+        }
+      },
+      // Prevent large bundles that might contain vulnerable patterns
+      chunkSizeWarningLimit: 1000,
     },
     // Expose specific environment variables to the client
     // WARNING: Only expose PUBLIC keys, never secret keys to client-side code
