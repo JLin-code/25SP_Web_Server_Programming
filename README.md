@@ -1,24 +1,26 @@
-```markdown
 # SP25 Web Server Programming — Course Project
 
 This repository contains a small full-stack web project used for the SP25 Web Server Programming course. It demonstrates a simple Express-based JSON API (server/) and a Vue 3 single-page application (client/) that consumes that API. The project was used to teach and explore backend concepts such as routing, controllers, JSON data modeling, CORS, static asset serving, and basic environment configuration — together with a modern frontend development workflow (Vite + Vue 3 + TypeScript checks).
 
-Contents
-	- server/: Express server, controllers, and small JSON-backed models used by the API
-	- client/: Vue 3 single-page application built with Vite (development and production build)
-	- data/: example JSON data files used by server-side models
+## Contents
 
-Goals
-	- Provide a minimal example of a server + client app that can be run locally
-	- Show how to structure controllers and models for small projects
-	- Demonstrate building a frontend with Vite and deploying it as static files served by the Express server
+- `server/`: Express server, controllers, and small JSON-backed models used by the API
+- `client/`: Vue 3 single-page application built with Vite (development and production build)
+- `data/`: example JSON data files used by server-side models
 
-Tech stack
-	- Server: Node.js + Express
-	- Client: Vue 3, Vite, TypeScript type-checking (via vue-tsc)
-	- Other: dotenv for configuration, supabase client lib included in the codebase for integrations
+## Goals
 
-Quick start (PowerShell)
+- Provide a minimal example of a server + client app that can be run locally
+- Show how to structure controllers and models for small projects
+- Demonstrate building a frontend with Vite and deploying it as static files served by the Express server
+
+## Tech stack
+
+- Server: Node.js + Express
+- Client: Vue 3, Vite, TypeScript type-checking (via `vue-tsc`)
+- Other: `dotenv` for configuration, `@supabase/supabase-js` included for potential integrations
+
+## Quick start (PowerShell)
 
 1) Install dependencies
 
@@ -26,7 +28,7 @@ Quick start (PowerShell)
 # from repository root
 pnpm install
 
-# install client dependencies (if you prefer separate install)
+# optional: install client dependencies separately
 cd client
 pnpm install
 cd ..
@@ -53,19 +55,21 @@ pnpm --prefix ./client run build
 pnpm start
 ```
 
-Notes about scripts
-	- Root package.json exposes:
-		- start -> node server/index.js (serves the built `dist` directory and the API)
-		- dev -> nodemon server/index.js --watch server
-		- build: client -> runs the client build script from the root
-	- Client package.json includes Vite dev, build, preview and type-checking scripts
+## Notes about scripts
 
-Configuration / environment variables
-	- The server reads environment variables via `dotenv`.
-	- Example environment variables used in the project:
-		- PORT — port the Express server listens on (default 8000)
-		- BEST_CLASS — example variable printed to the console when server starts (set for demo)
-	- Create a `.env` file in the repository root to override defaults. Example:
+- Root `package.json` exposes:
+  - `start` -> `node server/index.js` (serves the built client `dist` directory and the API)
+  - `dev` -> `nodemon server/index.js --watch server`
+  - `build: client` -> runs the client build script from the root
+- Client `package.json` includes Vite dev, build, preview and type-checking scripts
+
+## Configuration / environment variables
+
+- The server reads environment variables via `dotenv`.
+- Example environment variables used in the project:
+  - `PORT` — port the Express server listens on (default `8000`)
+  - `BEST_CLASS` — example variable printed to the console when server starts (set for demo)
+- Create a `.env` file in the repository root to override defaults. Example:
 
 ```text
 PORT=8000
@@ -75,22 +79,26 @@ BEST_CLASS=SP25_Web_Server_Programming
 # SUPABASE_KEY=...
 ```
 
-Project structure (high level)
-	- server/
-		- index.js — express app entry point
-		- controllers/ — route handlers (products, users)
-		- models/ — small model wrappers around JSON or Supabase
-	- client/
-		- src/ — Vue components and pages
-		- public/ — static assets for the client app
+## Project structure (high level)
 
-API surface (examples)
-	- GET /api/v1/products — returns product list
-	- GET /api/v1/products/:id — product by id
-	- GET /api/v1/users — returns user list
-	- Endpoints are implemented in `server/controllers` and use `server/models` for data.
+- `server/`
+  - `index.js` — Express app entry point
+  - `controllers/` — route handlers (products, users)
+  - `models/` — small model wrappers around JSON or Supabase
+- `client/`
+  - `src/` — Vue components and pages
+  - `public/` — static assets for the client app
 
-Development tips
-	- Use the client dev server (pnpm --prefix ./client run dev) while developing UI — it supports hot module replacement and faster iteration.
-	- Use `pnpm run dev` at the repo root to run the Express server with automatic restarts (nodemon).
-	- The server currently allows CORS from any origin for ease of development. Be careful to lock this down for production apps.
+## API surface (examples)
+
+- GET `/api/v1/products` — returns product list
+- GET `/api/v1/products/:id` — product by id
+- GET `/api/v1/users` — returns user list
+
+Endpoints are implemented in `server/controllers` and use `server/models` for data.
+
+## Development tips
+
+- Use the client dev server (`pnpm --prefix ./client run dev`) while developing UI — it supports hot module replacement and faster iteration.
+- Use `pnpm run dev` at the repo root to run the Express server with automatic restarts (nodemon).
+- The server currently allows CORS from any origin for ease of development. Be careful to lock this down for production apps.
